@@ -228,11 +228,6 @@ export function ConversationList({
                       {lastMessage?.content || "대화 없음"}
                     </p>
 
-                    {/* 요청 사항 표시 */}
-                    <p className="text-xs text-blue-600 truncate mt-1 font-medium">
-                      📋 {conversation.analysis.requestType}
-                    </p>
-
                     <div className="flex items-center mt-1 space-x-2">
                       <MessageCircle className="w-3 h-3 text-gray-400" />
                       <span className="text-xs text-gray-500">
