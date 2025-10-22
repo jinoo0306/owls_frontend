@@ -57,34 +57,40 @@ export function ConversationList({
     }
   };
 
-  const filteredConversations = conversations.filter((conversation) => {
-    const customer = customers.find((c) => c.id === conversation.customerId);
-    const customerName = customer?.name || "";
-    const lastMessage = conversation.messages[conversation.messages.length - 1];
-    const messageContent = lastMessage?.content || "";
+  const filteredConversations = conversations
+    .filter((conversation) => {
+      const customer = customers.find((c) => c.id === conversation.customerId);
+      const customerName = customer?.name || "";
+      const lastMessage =
+        conversation.messages[conversation.messages.length - 1];
+      const messageContent = lastMessage?.content || "";
 
-    // 검색어를 소문자로 변환
-    const searchLower = searchTerm.toLowerCase();
+      // 검색어를 소문자로 변환
+      const searchLower = searchTerm.toLowerCase();
 
-    return (
-      customerName.toLowerCase().includes(searchLower) ||
-      messageContent.toLowerCase().includes(searchLower) ||
-      conversation.analysis.requestType.toLowerCase().includes(searchLower) ||
-      conversation.analysis.inquiryDetails
-        .toLowerCase()
-        .includes(searchLower) ||
-      conversation.analysis.recommendedAction
-        .toLowerCase()
-        .includes(searchLower) ||
-      conversation.analysis.summary.toLowerCase().includes(searchLower) ||
-      (conversation.analysis.keywords &&
-        conversation.analysis.keywords.some((keyword) =>
-          keyword.toLowerCase().includes(searchLower)
-        )) ||
-      (conversation.analysis.category &&
-        conversation.analysis.category.toLowerCase().includes(searchLower))
-    );
-  });
+      return (
+        customerName.toLowerCase().includes(searchLower) ||
+        messageContent.toLowerCase().includes(searchLower) ||
+        conversation.analysis.requestType.toLowerCase().includes(searchLower) ||
+        conversation.analysis.inquiryDetails
+          .toLowerCase()
+          .includes(searchLower) ||
+        conversation.analysis.recommendedAction
+          .toLowerCase()
+          .includes(searchLower) ||
+        conversation.analysis.summary.toLowerCase().includes(searchLower) ||
+        (conversation.analysis.keywords &&
+          conversation.analysis.keywords.some((keyword) =>
+            keyword.toLowerCase().includes(searchLower)
+          )) ||
+        (conversation.analysis.category &&
+          conversation.analysis.category.toLowerCase().includes(searchLower))
+      );
+    })
+    .sort((a, b) => {
+      // 최신순으로 정렬 (startTime 기준 내림차순)
+      return new Date(b.startTime).getTime() - new Date(a.startTime).getTime();
+    });
 
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
