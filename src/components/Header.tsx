@@ -33,9 +33,6 @@ export default function Header({ agent }: HeaderProps) {
             <span className="text-sm font-medium text-gray-700">
               {agent.name}
             </span>
-            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-              활성 상담 {agent.activeConversations}개
-            </span>
           </div>
         </div>
       </div>
