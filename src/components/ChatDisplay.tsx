@@ -1,6 +1,6 @@
 import { Brain, ChevronDown } from "lucide-react";
-import React, { useState } from "react";
-import { api } from "../api";
+import { useState } from "react";
+// import { api } from "../api";
 import { AIConversation, Customer } from "../types";
 
 interface ChatDisplayProps {
@@ -14,11 +14,11 @@ export default function ChatDisplay({
   conversation,
   customer,
   onStatusChange,
-  onConversationUpdate,
-}: ChatDisplayProps) {
+}: // onConversationUpdate,
+ChatDisplayProps) {
   const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
-  const [newMessage, setNewMessage] = useState("");
-  const [sendingMessage, setSendingMessage] = useState(false);
+  // const [newMessage, setNewMessage] = useState("");
+  // const [sendingMessage, setSendingMessage] = useState(false);
 
   // 디버깅을 위한 로그
   console.log("ChatDisplay - conversation.analysis:", conversation.analysis);
@@ -56,16 +56,16 @@ export default function ChatDisplay({
     });
   };
 
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case "positive":
-        return "text-green-600 bg-green-50";
-      case "negative":
-        return "text-red-600 bg-red-50";
-      default:
-        return "text-blue-600 bg-blue-50";
-    }
-  };
+  // const getSentimentColor = (sentiment: string) => {
+  //   switch (sentiment) {
+  //     case "positive":
+  //       return "text-green-600 bg-green-50";
+  //     case "negative":
+  //       return "text-red-600 bg-red-50";
+  //     default:
+  //       return "text-blue-600 bg-blue-50";
+  //   }
+  // };
 
   const statusOptions = [
     { value: "ai_completed", label: "AI 완료" },
@@ -80,36 +80,36 @@ export default function ChatDisplay({
     setStatusDropdownOpen(false);
   };
 
-  const handleSendMessage = async () => {
-    if (!newMessage.trim() || sendingMessage) return;
+  // const handleSendMessage = async () => {
+  //   if (!newMessage.trim() || sendingMessage) return;
 
-    try {
-      setSendingMessage(true);
-      const updatedConversation =
-        await api.conversations.addMessageToConversation(
-          conversation.id,
-          newMessage.trim()
-        );
+  //   try {
+  //     setSendingMessage(true);
+  //     const updatedConversation =
+  //       await api.conversations.addMessageToConversation(
+  //         conversation.id,
+  //         newMessage.trim()
+  //       );
 
-      if (onConversationUpdate) {
-        onConversationUpdate(updatedConversation);
-      }
+  //     if (onConversationUpdate) {
+  //       onConversationUpdate(updatedConversation);
+  //     }
 
-      setNewMessage("");
-    } catch (error) {
-      console.error("메시지 전송 오류:", error);
-      // 에러 처리 (토스트 메시지 등)
-    } finally {
-      setSendingMessage(false);
-    }
-  };
+  //     setNewMessage("");
+  //   } catch (error) {
+  //     console.error("메시지 전송 오류:", error);
+  //     // 에러 처리 (토스트 메시지 등)
+  //   } finally {
+  //     setSendingMessage(false);
+  //   }
+  // };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
+  // const handleKeyPress = (e: React.KeyboardEvent) => {
+  //   if (e.key === "Enter" && !e.shiftKey) {
+  //     e.preventDefault();
+  //     handleSendMessage();
+  //   }
+  // };
 
   return (
     <div className="flex-1 flex flex-col bg-white h-full">
@@ -222,7 +222,7 @@ export default function ChatDisplay({
           <div className="bg-white bg-opacity-70 rounded-xl p-3">
             <div className="flex items-center space-x-2 mb-1">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <h4 className="font-medium text-blue-900 text-sm">요청 사항</h4>
+              <h4 className="font-medium text-blue-900 text-sm">문의 유형</h4>
               {conversation.analysis.priority && (
                 <span
                   className={`text-xs px-2 py-1 rounded-full ${
